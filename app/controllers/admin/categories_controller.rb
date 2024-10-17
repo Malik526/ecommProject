@@ -49,13 +49,18 @@ class Admin::CategoriesController < AdminController
 
   # DELETE /admin/categories/1 or /admin/categories/1.json
   def destroy
-    @admin_category.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to admin_categories_url, notice: "Category was successfully destroyed." }
-      format.json { head :no_content }
+    if @admin_category.destroy
+      flash[:notice] = "Category was successfully destroyed."
+    else
+      flash[:alert] = @admin_category.errors.full_messages.to_sentence
     end
+    redirect_to admin_categories_url
   end
+  
+
+  
+  
+  
 
   private
     # Use callbacks to share common setup or constraints between actions.

@@ -10,7 +10,35 @@
       </ul>
     </div>
   <% end %>
+  
+  <!-- Product Images with Delete Option -->
+<div class="my-5 flex flex-wrap gap-4">
+  <% if admin_product.images.attached? %>
+    <% admin_product.images.each do |image| %>
+      <div class="flex flex-col items-center">
+        <!-- Display the image -->
+        <%= image_tag image.variant(resize_to_limit: [150, 100]).processed, class: "rounded-md shadow-lg" %>
+        
+        <!-- Checkbox to remove the image -->
+        <div class="mt-5">
+          <%= check_box_tag "product[remove_image_ids][]", image.id, false %>
+          <label for="product[remove_image_ids][]">Remove</label>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <!-- Placeholder image if no images are attached -->
+    <%= image_tag "https://placehold.co/150x100", class: "w-full h-auto rounded-md shadow-lg" %>
+  <% end %>
+</div>
 
+  <!-- Upload New Images -->
+  <div class="my-5">
+    <%= form.label :images, "Upload New Product Images" %>
+    <%= form.file_field :images, multiple: true, class: "block shadow rounded-md border border-gray-200 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <!-- Other Product Fields -->
   <div class="my-5">
     <%= form.label :name %>
     <%= form.text_field :name, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
@@ -26,16 +54,23 @@
     <%= form.number_field :price, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
   </div>
 
-  <div class="my-5">
-    <%= form.label :category_id %>
-    <%= form.text_field :category_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
-  </div>
+<div class="my-5">
+  <%= form.label :category_name, "Select Category" %>
+  <%= form.collection_select :category_name, Category.order(:name), :name, :name, { prompt: "Choose a Category" }, 
+  class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+</div>
+
 
   <div class="my-5">
     <%= form.label :active %>
     <%= form.check_box :active, class: "block mt-2 h-5 w-5" %>
   </div>
 
+  <div class="my-5">
+    <%= link_to "product Stock", admin_product_stocks_path(admin_product), class "underline" %>
+  </div>
+
+  <!-- Submit Button -->
   <div class="inline">
     <%= form.submit class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium cursor-pointer" %>
   </div>

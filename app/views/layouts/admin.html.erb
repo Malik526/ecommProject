@@ -6,7 +6,6 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
   </head>
@@ -42,8 +41,23 @@
             </li>
           </ul>
         </nav>
+
         <div class="w-full p-8">
-        <%= yield %>
+          <!-- Display Flash Messages Here -->
+          <% if flash[:notice] %>
+            <div class="bg-green-100 text-green-800 p-4 rounded mb-4">
+              <%= flash[:notice] %>
+            </div>
+          <% end %>
+
+          <% if flash[:alert] %>
+            <div class="bg-red-100 text-red-800 p-4 rounded mb-4">
+              <%= flash[:alert] %>
+            </div>
+          <% end %>
+
+          <!-- Main content -->
+          <%= yield %>
         </div>
       </div>
     </main>

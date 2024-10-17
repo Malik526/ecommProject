@@ -1,15 +1,32 @@
-<div class="mx-auto md:w-2/3 w-full flex">
-  <div class="mx-auto">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+<div class="container mx-auto md:w-2/3 w-full p-4">
+  <!-- Display notification if present -->
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice">
+      <%= notice %>
+    </p>
+  <% end %>
+  
+  <!-- Category Image -->
+  <div class="mb-5">
+    <% if @admin_category.image.attached? %>
+      <%= image_tag @admin_category.image.variant(resize_to_limit: [150, 100]).processed, style: "width: 100px; height: auto;" %>
+    <% else %>
+      <%= image_tag "https://placehold.co/300x200", class: "w-full h-auto rounded-md shadow-lg" %>
     <% end %>
+  </div>
 
-    <%= render @admin_category %>
+  <!-- Category Details -->
+  <div class="bg-white p-5 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-5"><%= @admin_category.name %></h1>
+    <p class="text-gray-700 mb-5"><%= @admin_category.description %></p>
 
-    <%= link_to "Edit this category", edit_admin_category_path(@admin_category), class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
-    <div class="inline-block ml-2">
-      <%= button_to "Destroy this category", admin_category_path(@admin_category), method: :delete, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 font-medium" %>
+    <!-- Action Buttons -->
+    <div class="flex space-x-4">
+      <%= link_to "Edit this category", edit_admin_category_path(@admin_category), class: "mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
+      
+      <%= button_to "Destroy this category", admin_category_path(@admin_category), method: :delete, data: { confirm: "Are you sure?" }, class: "mt-2 rounded-lg py-3 px-5 bg-red-600 text-white font-medium" %>
+      
+      <%= link_to "Back to categories", admin_categories_path, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     </div>
-    <%= link_to "Back to categories", admin_categories_path, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
   </div>
 </div>
