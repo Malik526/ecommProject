@@ -1,17 +1,32 @@
-<div id="<%= dom_id stock %>">
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Product:</strong>
-    <%= stock.product_id %>
-  </p>
+<div id="<%= dom_id stock %>" class="my-8 p-6 bg-white rounded-lg shadow-lg">
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+    <!-- Product Name -->
+    <div class="col-span-1">
+      <strong class="block font-medium text-gray-700 mb-1">Product:</strong>
+      <p class="text-gray-900"><%= stock.product.name.present? ? stock.product.name : "N/A" %></p>
+    </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Amount:</strong>
-    <%= stock.amount %>
-  </p>
+    <!-- Stock Amount -->
+    <div class="col-span-1">
+      <strong class="block font-medium text-gray-700 mb-1">Amount:</strong>
+      <p class="text-gray-900"><%= stock.amount.present? ? stock.amount : "N/A" %></p>
+    </div>
 
-  <p class="my-5">
-    <strong class="block font-medium mb-1">Size:</strong>
-    <%= stock.size %>
-  </p>
+    <!-- Stock Size -->
+    <div class="col-span-1">
+      <strong class="block font-medium text-gray-700 mb-1">Size:</strong>
+      <p class="text-gray-900"><%= stock.size.present? ? stock.size : "N/A" %></p>
+    </div>
+  </div>
 
+  <!-- Action Buttons (Show, Edit, Back) -->
+  <% if action_name != "show" %>
+    <div class="mt-8 flex space-x-4">
+      <%= link_to "Show this stock", [:admin, stock.product, stock], class: "rounded-lg py-2 px-5 bg-blue-500 text-white font-medium hover:bg-blue-600 transition" %>
+      <%= link_to "Edit this stock", edit_admin_product_stock_path(stock.product, stock), class: "rounded-lg py-2 px-5 bg-yellow-500 text-white font-medium hover:bg-yellow-600 transition" %>
+      <%= link_to "Back to products", admin_products_path, class: "rounded-lg py-2 px-5 bg-gray-500 text-white font-medium hover:bg-gray-600 transition" %>
+    </div>
+  <% end %>
+
+  <hr class="mt-8">
 </div>

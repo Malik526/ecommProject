@@ -3,7 +3,8 @@ class Admin::StocksController < AdminController
 
   # GET /admin/stocks or /admin/stocks.json
   def index
-    @admin_stocks = Stock.where(product_id: params[:product_id])
+    # Fetch all stocks for all products
+    @admin_stocks = Stock.includes(:product).all
   end
 
   # GET /admin/stocks/1 or /admin/stocks/1.json
@@ -56,12 +57,13 @@ class Admin::StocksController < AdminController
     @admin_stock.destroy!
 
     respond_to do |format|
-      format.html { redirect_to admin_product_stocks_url, notice: "Stock was successfully destroyed." }
+      format.html { redirect_to admin_stocks_url, notice: "Stock was successfully destroyed." }
       format.json { head :no_content }
     end
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_admin_stock
       @admin_stock = Stock.find(params[:id])
