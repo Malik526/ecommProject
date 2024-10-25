@@ -24,8 +24,8 @@
     <div class="flex space-x-4">
       <%= link_to "Edit this category", edit_admin_category_path(@admin_category), class: "mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
       
-      <%= button_to "Destroy this category", admin_category_path(@admin_category), method: :delete, data: { confirm: "Are you sure?" }, class: "mt-2 rounded-lg py-3 px-5 bg-red-600 text-white font-medium" %>
-      
+      <%= link_to "Destroy this category", admin_category_path(@admin_category), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+      class: "mt-2 rounded-lg py-3 px-5 bg-red-600 text-white inline-block font-medium" %>
       <%= link_to "Back to categories", admin_categories_path, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     </div>
   </div>

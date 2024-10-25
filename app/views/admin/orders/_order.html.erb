@@ -1,0 +1,42 @@
+<div class="bg-white shadow-md rounded-lg p-6 my-5">
+  <h2 class="text-2xl font-bold text-gray-800 mb-6">Order Details</h2>
+  
+  <!-- Customer Email -->
+  <div class="flex items-center mb-4">
+    <strong class="block w-40 font-medium text-gray-700">Customer Email:</strong>
+    <p class="text-gray-800"><%= order.customer_email %></p>
+  </div>
+
+  <!-- Fulfillment Status -->
+  <div class="flex items-center mb-4">
+    <strong class="block w-40 font-medium text-gray-700">Fulfilled:</strong>
+    <p class="text-gray-800">
+      <% if order.fulfilled %>
+        <span class="text-green-600 font-medium">Yes</span>
+      <% else %>
+        <span class="text-red-600 font-medium">No</span>
+      <% end %>
+    </p>
+  </div>
+
+  <!-- Total Amount -->
+  <div class="flex items-center mb-4">
+    <strong class="block w-40 font-medium text-gray-700">Total:</strong>
+    <p class="text-gray-800">$<%= number_to_currency(order.total, unit: "") %></p>
+  </div>
+
+  <!-- Address -->
+  <div class="flex items-start mb-4">
+    <strong class="block w-40 font-medium text-gray-700">Shipping Address:</strong>
+    <p class="text-gray-800"><%= order.address %></p>
+  </div>
+
+  <!-- Action buttons -->
+  <div class="mt-6 flex space-x-4">
+    <%= link_to "Edit Order", edit_admin_order_path(order), class: "bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" %>
+    <%= link_to "Back to Orders", admin_orders_path, class: "bg-gray-100 py-2 px-4 rounded-lg hover:bg-gray-200" %>
+    <%= link_to "Show this order", admin_order_path(order), class: "bg-gray-100 py-2 px-4 rounded-lg hover:bg-gray-200" %>
+    <%= link_to "Destroy this order", admin_order_path(order), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+    class: "py-2 px-4 rounded-lg bg-red-600 text-white font-medium" %>
+  </div>
+</div>

@@ -25,8 +25,8 @@
     <div class="flex space-x-4">
       <%= link_to "Edit this product", edit_admin_product_path(@admin_product), class: "mt-2 rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
       
-      <%= button_to "Destroy this product", admin_product_path(@admin_product), method: :delete, data: { confirm: "Are you sure?" }, class: "mt-2 rounded-lg py-3 px-5 bg-red-600 text-white font-medium" %>
-      
+      <%= link_to "Destroy this product", admin_product_path(@admin_product), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+      class: "mt-2 rounded-lg py-3 px-5 bg-red-600 text-white inline-block font-medium" %>
       <%= link_to "Back to products", admin_products_path, class: "mt-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
     </div>
   </div>
