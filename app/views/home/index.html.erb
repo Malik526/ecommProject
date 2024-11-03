@@ -1,3 +1,54 @@
-<h1>Home</h1>
-<%= icon('fa-solid', 'house') %>
-<%= icon('fa-brands', 'font-awesome') %>
+<!-- Welcome Section -->
+<div class="bg-gray-800 text-white text-center py-16 md:py-20 w-full">
+  <h1 class="text-4xl md:text-5xl font-bold mb-4">Welcome to Clothes</h1>
+  <p class="text-lg md:text-xl mb-8">Shop the latest best Clothes!</p>
+  <%= link_to "Shop Now", root_path, class: "bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg" %>
+</div>
+
+<div class="flex flex-wrap justify-center mt-8 md:mt-12 items-center gap-6 md:gap-10">
+  <% @main_categories.each do |category| %>
+    <%= link_to category_path(category) do %>
+      <div class="flex flex-col mb-4 md:mb-6 max-w-xs">
+        <h2 class="text-gray-800 font-medium text-lg md:text-xl text-center mb-4 md:mb-6"><%= category.name %></h2>
+        <%= category.image.present? ? image_tag(category.image, class: "rounded-md shadow-lg w-full") : image_tag("https://placehold.co/520", class: "rounded-md shadow-lg w-full") %>
+      </div>
+    <% end %>
+  <% end %>
+</div>
+
+<!-- Customer Testimonials Section -->
+<div class="bg-gray-100 py-16 md:py-20 my-8 md:my-10">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-gray-800 mb-8">Customer Testimonials</h2>
+    <div class="flex flex-wrap justify-center gap-6">
+      <div class="w-full md:w-1/3 px-2 mb-4">
+        <div class="bg-white rounded-lg shadow-md py-4 px-4">
+          <p class="text-gray-800 text-base mb-4">"Clothes has the best choices of garments"</p>
+          <p class="text-gray-500 text-xs">- Jacob Gray</p>
+        </div>
+      </div>
+      <div class="w-full md:w-1/3 px-2 mb-4">
+        <div class="bg-white rounded-lg shadow-md py-4 px-4">
+          <p class="text-gray-800 text-base mb-4">"I love the pieces!"</p>
+          <p class="text-gray-500 text-xs">- Amy Red</p>
+        </div>
+      </div>
+      <div class="w-full md:w-1/3 px-2 mb-4">
+        <div class="bg-white rounded-lg shadow-md py-4 px-4">
+          <p class="text-gray-800 text-base mb-4">"Best drip!"</p>
+          <p class="text-gray-500 text-xs">- Mark Paul</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Stay Updated Section -->
+<div class="bg-gray-700 text-white text-center py-16 md:py-20 w-full">
+  <h2 class="text-2xl md:text-3xl font-bold mb-6">Stay Updated</h2>
+  <p class="text-base md:text-lg mb-8">Subscribe to our newsletter for the latest updates and offers.</p>
+  <%= form_with url: root_path, method: :post, local: true, class: "flex flex-col md:flex-row justify-center items-center" do %>
+    <%= email_field_tag :email, nil, placeholder: "Enter your email", class: "p-2 rounded-l text-gray-800 w-60 md:w-72 mb-4 md:mb-0 md:mr-2" %>
+    <%= submit_tag "Subscribe", class: "bg-gray-600 hover:bg-gray-800 cursor-pointer text-white font-bold py-2 px-4 rounded md:rounded-r" %>
+  <% end %>
+</div>

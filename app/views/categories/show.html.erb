@@ -1,0 +1,38 @@
+<h1 class="text-3xl font-bold text-gray-800 text-center mt-10 mb-8">Category Show Page</h1>
+
+<div class="min-h-screen flex">
+  <!-- Sidebar for Filters -->
+  <div class="w-1/4 p-6 bg-gray-100 rounded-lg shadow-md mr-8 sticky top-20">
+    <h2 class="text-xl font-semibold text-gray-800 mb-4">Filter Products</h2>
+    
+    <!-- Filter Form -->
+    <%= form_with url: category_path(@category), method: :get, class: "flex flex-col space-y-4"  do |form| %>
+      <%= form.number_field :min, placeholder: "Min Price", class: "border border-gray-300 rounded-md p-2 w-full" %>
+      <%= form.number_field :max, placeholder: "Max Price", class: "border border-gray-300 rounded-md p-2 w-full" %>
+      <%= form.submit "Filter", class: "bg-blue-600 hover:bg-blue-700 text-white rounded-md py-2 px-4 cursor-pointer mt-4" %>
+    <% end %>
+
+    <!-- Clear Filters Button -->
+    <%= link_to "Clear Filters", category_path(@category), class: "bg-gray-600 hover:bg-gray-700 text-white rounded-md py-2 px-4 cursor-pointer mt-2" %>
+  </div>
+
+  <!-- Product Listing -->
+  <div class="flex flex-wrap w-3/4 gap-8 justify-center">
+    <% if @products.empty? %>
+      <p class="text-2xl text-left text-gray-800">No products found</p>
+    <% else %>
+      <% @products.each do |product| %>
+        <%= link_to product_path(product) do %>
+          <div class="max-w-xs flex flex-col p-4 justify-center items-center bg-white rounded-lg shadow-lg">
+            <% if product.images.attached? %>
+              <%= image_tag product.images.first.variant(resize_to_limit: [250, 250]).processed, class: "rounded" %>
+            <% else %>
+              <%= image_tag "http://via.placeholder.com/250", class: "rounded" %>
+            <% end %>
+            <p class="mt-6 font-medium text-gray-800"><%= product.name %></p>
+          </div>
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+</div>

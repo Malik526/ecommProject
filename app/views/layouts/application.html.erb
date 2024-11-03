@@ -1,28 +1,46 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= content_for(:title) || "Ecomm" %></title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <title><%= content_for(:title) || "Ecomm" %></title>
+  
+  <!-- CSRF & CSP Meta Tags -->
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= yield :head %>
+  <!-- Additional Head Content -->
+  <%= yield :head %>
 
-    <link rel="manifest" href="/manifest.json">
-    <link rel="icon" href="/icon.png" type="image/png">
-    <link rel="icon" href="/icon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/icon.png">
-    <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_importmap_tags %>
-   
+  <!-- Favicon & Icons -->
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="/icon.png" type="image/png">
+  <link rel="icon" href="/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="/icon.png">
 
-  </head>
+  <!-- Stylesheets -->
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
-  </body>
+  <!-- JavaScript Imports -->
+  <%= javascript_importmap_tags %>
+</head>
+
+<body class="bg-gray-50">
+  <!-- Navbar -->
+  <header>
+    <%= render "shared/navbar" %>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto mt-10 md:mt-16 px-5 flex flex-col items-center">
+    <%= yield %>
+  </main>
+
+  <!-- Footer -->
+  <footer class="w-full mt-10 bg-gray-100 py-4 border-t border-gray-200">
+    <%= render "shared/footer" %>
+  </footer>
+</body>
 </html>

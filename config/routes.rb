@@ -25,4 +25,7 @@ Rails.application.routes.draw do
     root to: "admin#index", as: :admin_root 
   end
   get "admin" => "admin#index"
+
+  resources :categories, only: [:show]
+  resources :products, only: [:show]
 end
