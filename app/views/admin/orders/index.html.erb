@@ -5,14 +5,100 @@
 
   <% content_for :title, "Orders" %>
 
-  <div class="flex justify-between items-center">
+  <div class="flex justify-between items-center mb-6">
     <h1 class="font-bold text-4xl">Orders</h1>
     <%= link_to "New order", new_admin_order_path, class: "rounded-lg py-3 px-5 bg-blue-600 text-white block font-medium" %>
   </div>
 
-  <div id="admin_orders" class="min-w-full">
-    <% @admin_orders.each do |admin_order| %>
-      <%= render admin_order %>
-    <% end %>
+  <!-- Unfulfilled Orders -->
+  <h2 class="text-2xl font-bold mb-4">Unfulfilled Orders</h2>
+  <div class="flex flex-col w-full mb-8">
+    <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+      <div class="py-2 inline-block min-w-full">
+        <div class="overflow-x-auto">
+          <table class="min-w-full overflow-x-scroll">
+            <thead class="bg-white border-b">
+              <tr>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Order ID</th>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Customer Email</th>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Address</th>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @not_fulfilled_orders.present? %>
+                <% @not_fulfilled_orders.each do |o| %>
+                  <tr class="bg-gray-50 border-b">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 underline">
+                      <%= link_to o.id, [:admin, o], class: 'underline' %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><%= o.customer_email %></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><%= o.address %></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><%= number_to_currency(o.total) %></td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="4" class="px-6 py-4 text-center text-gray-500">No unfulfilled orders found.</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="mt-4">
+            <% if @not_fulfilled_pagy&.pages.to_i > 1 %>
+              <%= link_to "Previous", admin_orders_path(page: @page - 1), class: "px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" if @page > 1 %>
+              <%= link_to "Next", admin_orders_path(page: @page + 1), class: "px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" if @page < @total_pages_not_fulfilled %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fulfilled Orders -->
+  <h2 class="text-2xl font-bold mb-4">Fulfilled Orders</h2>
+  <div class="flex flex-col w-full">
+    <div class="overflow-x-auto sm:mx-0.5 lg:mx-0.5">
+      <div class="py-2 inline-block min-w-full">
+        <div class="overflow-x-auto">
+          <table class="min-w-full overflow-x-scroll">
+            <thead class="bg-white border-b">
+              <tr>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Order ID</th>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Customer Email</th>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Address</th>
+                <th class="text-sm font-medium text-gray-800 px-6 py-4 text-left">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if @fulfilled_orders.present? %>
+                <% @fulfilled_orders.each do |o| %>
+                  <tr class="bg-gray-50 border-b">
+                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 underline">
+                      <%= link_to o.id, [:admin, o], class: 'underline' %>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><%= o.customer_email %></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><%= o.address %></td>
+                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800"><%= number_to_currency(o.total) %></td>
+                  </tr>
+                <% end %>
+              <% else %>
+                <tr>
+                  <td colspan="4" class="px-6 py-4 text-center text-gray-500">No fulfilled orders found.</td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+          <!-- Pagination -->
+          <div class="mt-4">
+            <% if @fulfilled_pagy&.pages.to_i > 1 %>
+              <%= link_to "Previous", admin_orders_path(page: @page - 1), class: "px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" if @page > 1 %>
+              <%= link_to "Next", admin_orders_path(page: @page + 1), class: "px-4 py-2 bg-gray-200 rounded hover:bg-gray-300" if @page < @total_pages_fulfilled %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

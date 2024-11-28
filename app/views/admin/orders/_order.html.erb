@@ -1,42 +1,65 @@
-<div class="bg-white shadow-md rounded-lg p-6 my-5">
-  <h2 class="text-2xl font-bold text-gray-800 mb-6">Order Details</h2>
-  
-  <!-- Customer Email -->
-  <div class="flex items-center mb-4">
-    <strong class="block w-40 font-medium text-gray-700">Customer Email:</strong>
-    <p class="text-gray-800"><%= order.customer_email %></p>
-  </div>
-
-  <!-- Fulfillment Status -->
-  <div class="flex items-center mb-4">
-    <strong class="block w-40 font-medium text-gray-700">Fulfilled:</strong>
-    <p class="text-gray-800">
-      <% if order.fulfilled %>
-        <span class="text-green-600 font-medium">Yes</span>
-      <% else %>
-        <span class="text-red-600 font-medium">No</span>
-      <% end %>
+<div class="container mx-auto md:w-2/3 w-full p-4">
+  <!-- Display notification if present -->
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice">
+      <%= notice %>
     </p>
-  </div>
+  <% end %>
 
-  <!-- Total Amount -->
-  <div class="flex items-center mb-4">
-    <strong class="block w-40 font-medium text-gray-700">Total:</strong>
-    <p class="text-gray-800">$<%= number_to_currency(order.total, unit: "") %></p>
-  </div>
+  <!-- Order Details Card -->
+  <div class="bg-white p-5 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-5">Order #<%= order.id %></h1>
 
-  <!-- Address -->
-  <div class="flex items-start mb-4">
-    <strong class="block w-40 font-medium text-gray-700">Shipping Address:</strong>
-    <p class="text-gray-800"><%= order.address %></p>
-  </div>
+    <!-- Customer Email -->
+    <div class="mb-5">
+      <strong class="block text-gray-700 font-medium">Customer Email:</strong>
+      <p class="text-gray-800"><%= order.customer_email %></p>
+    </div>
 
-  <!-- Action buttons -->
-  <div class="mt-6 flex space-x-4">
-    <%= link_to "Edit Order", edit_admin_order_path(order), class: "bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700" %>
-    <%= link_to "Back to Orders", admin_orders_path, class: "bg-gray-100 py-2 px-4 rounded-lg hover:bg-gray-200" %>
-    <%= link_to "Show this order", admin_order_path(order), class: "bg-gray-100 py-2 px-4 rounded-lg hover:bg-gray-200" %>
-    <%= link_to "Destroy this order", admin_order_path(order), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
-    class: "py-2 px-4 rounded-lg bg-red-600 text-white font-medium" %>
+    <!-- Fulfilled Status -->
+    <div class="mb-5">
+      <strong class="block text-gray-700 font-medium">Fulfilled:</strong>
+      <p class="text-gray-800">
+        <% if order.fulfilled %>
+          <span class="text-green-600 font-bold">Yes</span>
+        <% else %>
+          <span class="text-red-600 font-bold">No</span>
+        <% end %>
+      </p>
+    </div>
+
+    <!-- Total -->
+    <div class="mb-5">
+      <strong class="block text-gray-700 font-medium">Total:</strong>
+      <p class="text-gray-800">$<%= number_to_currency(order.total, unit: "") %></p>
+    </div>
+
+    <!-- Address -->
+    <div class="mb-5">
+      <strong class="block text-gray-700 font-medium">Address:</strong>
+      <p class="text-gray-800"><%= order.address %></p>
+    </div>
+
+    <!-- Products -->
+    <% if order.order_products.any? %>
+      <div class="mb-5">
+        <strong class="block text-gray-700 font-medium">Products:</strong>
+        <ul class="list-disc pl-5 text-gray-800">
+          <% order.order_products.each do |op| %>
+            <li>
+              <strong><%= op.product.name %></strong> - Size: <%= op.size %>, Quantity: <%= op.quantity %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <!-- Action Buttons -->
+    <div class="flex space-x-4 mt-6">
+      <%= link_to "Edit this Order", edit_admin_order_path(order), class: "rounded-lg py-3 px-5 bg-blue-600 text-white inline-block font-medium" %>
+      <%= link_to "Destroy this Order", admin_order_path(order), data: { turbo_method: :delete, turbo_confirm: "Are you sure?" }, 
+      class: "rounded-lg py-3 px-5 bg-red-600 text-white inline-block font-medium" %>
+      <%= link_to "Back to Orders", admin_orders_path, class: "rounded-lg py-3 px-5 bg-gray-100 text-gray-800 inline-block font-medium" %>
+    </div>
   </div>
 </div>

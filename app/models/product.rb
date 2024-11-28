@@ -3,6 +3,7 @@ class Product < ApplicationRecord
   belongs_to :category
   has_many_attached :images  # For handling multiple images
   has_many :stocks, dependent: :destroy # Add this line to establish the relationship
+  has_many :order_product #establish relationship
   
   def thumbnail
     images.first.variant(resize_to_limit: [100, 100]).processed if images.attached?

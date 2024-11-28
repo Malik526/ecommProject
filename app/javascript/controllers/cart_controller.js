@@ -52,6 +52,11 @@ export default class extends Controller {
 
   checkout() {
     const cart = JSON.parse(localStorage.getItem("cart"))
+    const payload = {
+      authenticity_token: "",
+      cart: cart
+    }
+
     const csrfToken = document.querySelector("[name='csrf-token']").content
 
     fetch("/checkout", {
@@ -60,7 +65,7 @@ export default class extends Controller {
         "Content-Type": "application/json",
         "X-CSRF-Token": csrfToken
       },
-      body: JSON.stringify({ cart })
+      body: JSON.stringify(payload)
     }).then(response => {
       if (response.ok) {
         response.json().then(body => {
@@ -69,13 +74,12 @@ export default class extends Controller {
       } else {
         response.json().then(body => {
           const errorEl = document.createElement("div")
-          errorEl.innerText = `There was an error processing your order: ${body.error}`
-          const errorContainer = document.getElementById("errorContainer")
-          if (errorContainer) {
-            errorContainer.appendChild(errorEl)
-          }
+          errorEl.innerText = `There was an error processing your order. ${body.error}`
+          let errorContainer = document.getElementById("errorContainer")
+          errorContainer.appendChild(errorEl)
         })
       }
     })
+
   }
 }

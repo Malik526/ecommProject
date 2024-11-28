@@ -26,8 +26,14 @@ Rails.application.routes.draw do
   end
   get "admin" => "admin#index"
   get "cart" => "carts#show"
-  post "checkout" => "checkouts#create"
 
+  resource :checkout, only: [:new, :create] do
+    get 'confirmation', on: :collection
+    get 'success', on: :collection # Define the success path
+    get 'cancel', on: :collection  # Define the cancel path
+  end
+   
   resources :categories, only: [:show]
   resources :products, only: [:show]
+
 end

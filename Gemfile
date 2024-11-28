@@ -62,3 +62,7 @@ group :test do
   gem "capybara"
   gem "selenium-webdriver"
 end
+
+gem "stripe", "~> 13.2"
+
+gem 'pagy'
