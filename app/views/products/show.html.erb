@@ -14,25 +14,26 @@
     <p class="text-2xl text-gray-700"><%= number_to_currency(@product.price, unit: "$", precision: 2) %></p>
     <p class="text-md py-4 leading-relaxed text-gray-600"><%= @product.description %></p>
 
-    <!-- Size Selection -->
-    <div class="my-4">
-      <p class="uppercase text-lg font-semibold text-gray-800 mb-3">Select Size</p>
-      <div class="flex gap-3">
-        <% @product.stocks.each do |stock| %>
-          <% if stock.amount > 0 %>
-            <button data-action="click->products#selectSize" value="<%= stock.size %>" 
-                    class="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
-              <%= stock.size %>
-            </button>
-          <% else %>
-            <button disabled value="<%= stock.size %>" 
-                    class="disabled:bg-gray-400 bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
-              <%= stock.size %>
-            </button>
-          <% end %>
+  <!-- Size Selection -->
+  <div class="my-4">
+    <p class="uppercase text-lg font-semibold text-gray-800 mb-3">Select Size</p>
+    <div class="flex gap-3">
+      <% @product.stocks.each do |stock| %>
+        <% if stock.amount > 0 %>
+          <button data-action="click->products#selectSize" value="<%= stock.size %>" 
+                  class="bg-gray-200 text-gray-800 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-opacity-50">
+            <%= stock.size %>
+          </button>
+        <% else %>
+          <button disabled value="<%= stock.size %>" 
+                  class="bg-gray-600 text-gray-400 font-semibold py-2 px-4 rounded-lg cursor-not-allowed">
+            <%= stock.size %>
+          </button>
         <% end %>
-      </div>
+      <% end %>
     </div>
+  </div>
+
 
     <!-- Add to Cart Button -->
     <div id="selected-size" class="text-gray-500 mb-2"></div>

@@ -30,7 +30,7 @@ class WebhooksController < ApplicationController
         else
           address = ""
         end
-        order = Order.create!(customer_email: session["customer_details"]["email"], total: session["amount_total"], address: address, fulfilled: false)
+        order = Order.create!(customer_email: session["customer_details"]["email"], total: session["amount_total"] /100.0, address: address, fulfilled: false)
         full_session = Stripe::Checkout::Session.retrieve({
           id: session.id,
           expand: ['line_items']

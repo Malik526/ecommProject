@@ -26,12 +26,12 @@ Rails.application.routes.draw do
   end
   get "admin" => "admin#index"
   get "cart" => "carts#show"
-
-  resource :checkout, only: [:new, :create] do
-    get 'confirmation', on: :collection
-    get 'success', on: :collection # Define the success path
-    get 'cancel', on: :collection  # Define the cancel path
-  end
+  
+  # Checkouts
+  post "checkout" => "checkouts#create"
+  get "success" => "checkouts#success"
+  post "webhooks" => "webhooks#stripe"
+  get "cancel" => "checkouts#cancel"
    
   resources :categories, only: [:show]
   resources :products, only: [:show]
