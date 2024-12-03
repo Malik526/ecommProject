@@ -1,4 +1,4 @@
-class CheckoutsController < ApplicationController
+class CheckoutsController < ApplicationController 
   def create
     stripe_secret_key = Rails.application.credentials.dig(:stripe, :secret_key)
     Stripe.api_key = stripe_secret_key
@@ -12,9 +12,6 @@ class CheckoutsController < ApplicationController
         render json: { error: "Not enough stock for #{product.name} in size #{item["size"]}. Only #{product_stock&.amount || 0} left." }, status: :bad_request
         return
       end
-
-      # Deduct stock
-      product_stock.update!(amount: product_stock.amount - item["quantity"].to_i)
 
       # Create line item for Stripe
       {
